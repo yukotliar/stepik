@@ -1,3 +1,0 @@
-# stepik
-# stepik
-# stepik
