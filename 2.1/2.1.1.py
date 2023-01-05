@@ -20,9 +20,11 @@ try:
     answer_element.send_keys(y)
     checkbox_element = browser.find_element(By.ID, 'robotCheckbox')
     checkbox_element.click()
+    radio_element = browser.find_element(By.ID, 'robotsRule')
+    radio_element.click()
     button = browser.find_element(By.XPATH, "//button[text()='Submit']")
     button.click()
 
 finally:
-    time.sleep(3)
+    time.sleep(30)
     browser.quit()
