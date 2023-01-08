@@ -24,7 +24,6 @@ try:
     button = browser.find_element(By.TAG_NAME, "button")
     button.click()
 
-
 finally:
-    time.sleep(30)
+    time.sleep(3)
     browser.quit()
