@@ -5,7 +5,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 import time
 import math
 
-answer = int(math.log(int(time.time())))
+def answer():
+    return str(math.log(int(time.time())))
 
 links = ["https://stepik.org/lesson/236895/step/1",
         "https://stepik.org/lesson/236896/step/1",
@@ -19,21 +20,27 @@ links = ["https://stepik.org/lesson/236895/step/1",
 @pytest.mark.parametrize('link', links)
 def test_parametrize(browser, link):
     browser.get(link)
-    button = WebDriverWait(browser, 5).until(
+    button_login = WebDriverWait(browser, 3).until(
             EC.element_to_be_clickable((By.ID, "ember33"))
     )
-    button.click()
+    button_login.click()
     email = browser.find_element(By.ID, "id_login_email")
-    email.send_keys("login")
+    email.send_keys("jacksinnerconflict@gmail.com")
     password = browser.find_element(By.ID, "id_login_password")
-    password.send_keys("password")
-    submit = browser.find_element(By.CLASS_NAME, "sign-form__btn")
-    submit.click()
-    pop_up = WebDriverWait(browser,5).until(
+    password.send_keys("Zxc35711522")
+    button_submit = browser.find_element(By.CLASS_NAME, "sign-form__btn")
+    button_submit.click()
+    pop_up = WebDriverWait(browser,3).until(
         EC.invisibility_of_element_located((By.ID, "ember84"))
     )
-    text_field = browser.find_element(By.ID, "ember99")
-    text_field.send_keys(answer)
-
-
+    text_field = WebDriverWait(browser, 3).until(
+        EC.presence_of_element_located((By.CLASS_NAME, "ember-text-area"))
+    )
+    text_field.send_keys(answer())
+    browser.implicitly_wait(5)
+    button_send = browser.find_element(By.CLASS_NAME, "submit-submission")
+    button_send.click()
+    hint = browser.find_element(By.CLASS_NAME, "smart-hints__hint")
+    hint_text = hint.text
+    assert hint_text == "Correct!", f"expected 'Correct!', got '{hint_text}"
 
