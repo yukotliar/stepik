@@ -17,30 +17,35 @@ links = ["https://stepik.org/lesson/236895/step/1",
         "https://stepik.org/lesson/236904/step/1",
         "https://stepik.org/lesson/236905/step/1"]
 
+
 @pytest.mark.parametrize('link', links)
 def test_parametrize(browser, link):
+    browser.implicitly_wait(5)
     browser.get(link)
-    button_login = WebDriverWait(browser, 3).until(
+    button_login = WebDriverWait(browser, 5).until(
             EC.element_to_be_clickable((By.ID, "ember33"))
     )
     button_login.click()
     email = browser.find_element(By.ID, "id_login_email")
-    email.send_keys("jacksinnerconflict@gmail.com")
+    email.send_keys("")
     password = browser.find_element(By.ID, "id_login_password")
-    password.send_keys("Zxc35711522")
+    password.send_keys("")
     button_submit = browser.find_element(By.CLASS_NAME, "sign-form__btn")
     button_submit.click()
-    pop_up = WebDriverWait(browser,3).until(
-        EC.invisibility_of_element_located((By.ID, "ember84"))
-    )
-    text_field = WebDriverWait(browser, 3).until(
+    time.sleep(5)
+    text_field = WebDriverWait(browser,5).until(
         EC.presence_of_element_located((By.CLASS_NAME, "ember-text-area"))
     )
     text_field.send_keys(answer())
-    browser.implicitly_wait(5)
-    button_send = browser.find_element(By.CLASS_NAME, "submit-submission")
+    button_send = WebDriverWait(browser, 5).until(
+        EC.element_to_be_clickable((By.CLASS_NAME, "submit-submission"))
+    )
     button_send.click()
-    hint = browser.find_element(By.CLASS_NAME, "smart-hints__hint")
+    time.sleep(5)
+    hint = WebDriverWait(browser, 5).until(
+        EC.visibility_of_element_located((By.CLASS_NAME, "smart-hints__hint"))
+    )
     hint_text = hint.text
     assert hint_text == "Correct!", f"expected 'Correct!', got '{hint_text}"
+
 
